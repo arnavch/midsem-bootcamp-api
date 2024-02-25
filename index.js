@@ -36,7 +36,11 @@ async function getTrainByLine(line) {
     }),
   };
   let res = await axios(requestSettings);
-  return res.data.RailArrivals.filter((arrival) => {
+  const data = res.data
+  if (data == null || data.RailArrivals == null) {
+    return [];
+  }
+  return data.RailArrivals.filter((arrival) => {
     return arrival.LINE == line.toUpperCase();
   });
 }
